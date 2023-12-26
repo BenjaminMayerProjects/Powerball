@@ -1,0 +1,33 @@
+﻿<!-- Views/Home/Index.cshtml -->
+@model Powerball.PowerballModel
+
+<h1>Powerball Number Visualizer</h1>
+
+<div id="container">
+    <div class="card">Powerball</div>
+    @foreach (var number in Model.RandomNumbers)
+    {
+        <div class="card">@number</div>
+    }
+</div>
+
+<form method="post" action="/Home/CheckNumbers">
+    <label for="userNumbers">Enter your Powerball numbers (comma-separated): </label>
+    <input type="text" id="userNumbers" name="userNumbers">
+    <button type="submit">Check Numbers</button>
+</form>
+
+<div>
+    @if (Model.UserNumbers != null)
+    {
+        <div class="card">Your Numbers</div>
+        @for (var i = 0; i < Model.UserNumbers.Count && i < 5; i++)
+        {
+            var backgroundColor = Model.RandomNumbers.Contains(Model.UserNumbers[i]) ? "green" : "red";
+            <div class="card" style="background-color: @backgroundColor;">@Model.UserNumbers[i]</div>
+        }
+
+        <p>@(Model.UserWon ? "Congratulations! You won!" : "Sorry, you didn't win this time.")</p>
+    }
+</div>
+
